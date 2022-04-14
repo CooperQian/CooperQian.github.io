@@ -16,25 +16,20 @@
   <meta name="author" content="CooperQian">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在ubuntu20.04搭建一套qemu调试aarch64的内核环境，本环境无需开发板，配合GDB命令更可以单步调试内核。">
+    <meta name="description" content="基于crosstool-ng编译一个aarch64架构的编译器。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用QEMU搭建KERNEL调试环境">
-<meta property="og:url" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:title" content="编译一个编译器">
+<meta property="og:url" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/index.html">
 <meta property="og:site_name" content="CooperQian&#39;s blog">
-<meta property="og:description" content="在ubuntu20.04搭建一套qemu调试aarch64的内核环境，本环境无需开发板，配合GDB命令更可以单步调试内核。">
+<meta property="og:description" content="基于crosstool-ng编译一个aarch64架构的编译器。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE.png">
-<meta property="og:image" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE2.png">
-<meta property="og:image" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE3.png">
-<meta property="og:image" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/%E5%86%85%E6%A0%B8%E9%85%8D%E7%BD%AE.png">
-<meta property="article:published_time" content="2021-04-14T10:41:25.000Z">
-<meta property="article:modified_time" content="2022-04-14T15:40:44.933Z">
+<meta property="article:published_time" content="2022-04-14T14:52:48.000Z">
+<meta property="article:modified_time" content="2022-04-14T15:41:23.836Z">
 <meta property="article:author" content="CooperQian">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cooperqian.github.io/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE.png">
   
   
-  <title>使用QEMU搭建KERNEL调试环境 - CooperQian&#39;s blog</title>
+  <title>编译一个编译器 - CooperQian&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -191,7 +186,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用QEMU搭建KERNEL调试环境"></span>
+            <span id="subtitle" data-typed-text="编译一个编译器"></span>
           
         </div>
 
@@ -202,8 +197,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-04-14 18:41" pubdate>
-          2021年4月14日 晚上
+        <time datetime="2022-04-14 22:52" pubdate>
+          2022年4月14日 晚上
         </time>
       </span>
     
@@ -214,7 +209,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          0 字
         
       </span>
     
@@ -225,7 +220,7 @@
         
         
         
-          17 分钟
+          1 分钟
         
       </span>
     
@@ -271,103 +266,11 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用QEMU搭建KERNEL调试环境</h1>
+            <h1 style="display: none">编译一个编译器</h1>
             
             <div class="markdown-body">
               
-              <h2 id="使用QEMU搭建基于aarch64架构的Kernel调试环境"><a href="#使用QEMU搭建基于aarch64架构的Kernel调试环境" class="headerlink" title="使用QEMU搭建基于aarch64架构的Kernel调试环境"></a>使用QEMU搭建基于aarch64架构的Kernel调试环境</h2><p>本文介绍在ubuntu20.04搭建一套qemu调试aarch64的内核环境，本环境无需开发板，配合GDB命令更可以单步调试内核。</p>
-<p>更多有趣实用功能正在探索～</p>
-<h3 id="编译安装QEMU"><a href="#编译安装QEMU" class="headerlink" title="编译安装QEMU"></a>编译安装QEMU</h3><ol>
-<li><p>官网下载<a target="_blank" rel="noopener" href="https://download.qemu.org/qemu-6.2.0.tar.xz">QEMU6.2.0源码包</a></p>
-</li>
-<li><p>安装依赖库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install ninja-build<br>sudo apt-get install pkg-config<br>sudo apt-get install libglib2.0-dev<br>sudo apt install pixman<br>sudo apt-get install libglib2.0-dev<br>sudo apt-get install libmount-dev<br>sudo apt install pkg-config<br>sudo apt install libpixman-1-dev<br>sudo apt-get install build-essential<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>编译安装</p>
-<p>这里就编译RISCV64和AARCH64架构，编译完成后自行环境变量。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">./configure --target-list=riscv64-softmmu,aarch64-softmmu --prefix=~/qemu_bin<br>make -j16<br>make install<br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="使用buildroot编译文件系统"><a href="#使用buildroot编译文件系统" class="headerlink" title="使用buildroot编译文件系统"></a>使用buildroot编译文件系统</h3><ol>
-<li><p>官网下载<a target="_blank" rel="noopener" href="https://buildroot.org/downloads/buildroot-2022.02.1.tar.xz">buildroot源码</a></p>
-</li>
-<li><p>配置buildroot</p>
-<p>配置架构相关参数</p>
-<img src="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload class="" title="配置一">
-
-<p>配置自定义编译器相关参数</p>
-<img src="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE2.png" srcset="/img/loading.gif" lazyload class="" title="配置二">
-
-<p>配置文件系统格式参数</p>
-<img src="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/buildroot%E9%85%8D%E7%BD%AE3.png" srcset="/img/loading.gif" lazyload class="" title="配置三">
-</li>
-<li><p>编译</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -j16<br><span class="hljs-meta prompt_"># </span><span class="language-bash">成果</span><br>ls output/images/<br>rootfs.cpio  rootfs.cpio.gz  rootfs.tar<br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h3><ol>
-<li><p>下载<a target="_blank" rel="noopener" href="https://www.kernel.org/">内核源码</a>，解压源码后将上一步的成果<strong>rootfs.cpio.gz</strong>复制到内核源码usr目录下。</p>
-</li>
-<li><p>配置内核</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">使用arm64默认配置</span><br>make ARCH=arm64 CROSS_COMPILER=aarch64-qianhao-linux-gnu- defconfig<br><span class="hljs-meta prompt_">#</span><span class="language-bash">进入内核打开ramfs选项</span><br>make ARCH=arm64 CROSS_COMPILER=aarch64-qianhao-linux-gnu- menuconfig<br></code></pre></td></tr></table></figure>
-
-<p>配置如下图：</p>
-<img src="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/%E5%86%85%E6%A0%B8%E9%85%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload class="" title="linux内核配置">
-</li>
-<li><p>编译内核</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">make ARCH=arm64 CROSS_COMPILER=aarch64-qianhao-linux-gnu- Image -j16<br>make ARCH=arm64 CROSS_COMPILER=aarch64-qianhao-linux-gnu- dtbs -j16<br>make ARCH=arm64 CROSS_COMPILER=aarch64-qianhao-linux-gnu- modules -j16<br></code></pre></td></tr></table></figure>
-
-<p>到此，所有资源准备就绪，可以开始调试内核～</p>
-</li>
-</ol>
-<h3 id="使用GDB单步调试内核"><a href="#使用GDB单步调试内核" class="headerlink" title="使用GDB单步调试内核"></a>使用GDB单步调试内核</h3><p>打开两个终端，一个运行qemu，一个运行gdb。</p>
-<p>终端一：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">qemu-system-aarch64 -M virt,gic-version=3 -cpu cortex-a53 -smp 1 -m 1024M -kernel arch/arm64/boot/Image -nographic -append &quot;nokaslr earlycon&quot; -S -s<br></code></pre></td></tr></table></figure>
-
-<p>解释一下上面参数的意义：</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-M virt,gic-version&#x3D;3</td>
-<td>选择virt的硬件，中断控制版本为GICV3</td>
-</tr>
-<tr>
-<td>-cpu cortex-a53</td>
-<td>CPU选择为A53</td>
-</tr>
-<tr>
-<td>-smp 1</td>
-<td>单核</td>
-</tr>
-<tr>
-<td>-m 1024M</td>
-<td>1G内存</td>
-</tr>
-<tr>
-<td>-kernel arch&#x2F;arm64&#x2F;boot&#x2F;Image</td>
-<td>内核映像路径</td>
-</tr>
-<tr>
-<td>-nographic</td>
-<td>关闭图像</td>
-</tr>
-<tr>
-<td>-append “nokaslr earlycon”</td>
-<td>打开earlycon 关闭kaslr(关闭kaslr才能调试内核)</td>
-</tr>
-<tr>
-<td>-S -s</td>
-<td>freeze CPU at startup\shorthand for -gdb tcp::1234</td>
-</tr>
-</tbody></table>
-<p>终端二：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">aarch64-qianhao-linux-gnu-gdb vmlinux<br><span class="hljs-meta prompt_">#</span><span class="language-bash">进入gdb后输入</span><br>target remote :1234<br>b start_kernel<br>c<br><span class="hljs-meta prompt_">#</span><span class="language-bash">效果</span><br>(gdb) target remote :1234<br>Remote debugging using :1234<br>0x0000000040000000 in ?? ()<br>(gdb) b start_kernel <br>Breakpoint 1 at 0xffff8000097b0c10: file init/main.c, line 932.<br>(gdb) c<br>Continuing.<br>Breakpoint 1, 0xffff8000097b0c10 in start_kernel () at init/main.c:932<br>932		set_task_stack_end_magic(&amp;init_task);<br>(gdb) <br></code></pre></td></tr></table></figure>
-
-<p>到此就可以愉快的调试内核了。</p>
-
+              
               
             </div>
             <hr/>
@@ -389,7 +292,7 @@
   
     <span>></span>
     
-  <a href="/categories/Linux/%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/" class="category-chain-item">调试环境</a>
+  <a href="/categories/Linux/%E5%9F%BA%E7%A1%80%E8%BD%AF%E4%BB%B6/" class="category-chain-item">基础软件</a>
   
   
 
@@ -411,8 +314,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用QEMU搭建KERNEL调试环境</div>
-      <div>https://cooperqian.github.io/2021/04/14/使用QEMU搭建KERNEL调试环境/</div>
+      <div>编译一个编译器</div>
+      <div>https://cooperqian.github.io/2022/04/14/编译一个编译器/</div>
     </div>
     <div class="license-meta">
       
@@ -424,7 +327,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年4月14日</div>
+          <div>2022年4月14日</div>
         </div>
       
       
@@ -466,15 +369,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/" title="编译一个编译器">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">编译一个编译器</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/" title="使用QEMU搭建KERNEL调试环境">
+                        <span class="hidden-mobile">使用QEMU搭建KERNEL调试环境</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
