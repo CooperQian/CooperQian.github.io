@@ -4,12 +4,20 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2022/04/13/hello-world/"/>
-    <url>/2022/04/13/hello-world/</url>
+    <title>使用QEMU搭建KERNEL调试环境</title>
+    <link href="/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/"/>
+    <url>/2021/04/14/%E4%BD%BF%E7%94%A8QEMU%E6%90%AD%E5%BB%BAKERNEL%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="使用QEMU搭建基于aarch64架构的Kernel调试环境"><a href="#使用QEMU搭建基于aarch64架构的Kernel调试环境" class="headerlink" title="使用QEMU搭建基于aarch64架构的Kernel调试环境"></a>使用QEMU搭建基于aarch64架构的Kernel调试环境</h2><h3 id="编译安装QEMU"><a href="#编译安装QEMU" class="headerlink" title="编译安装QEMU"></a>编译安装QEMU</h3><h3 id="使用buildroot编译文件系统"><a href="#使用buildroot编译文件系统" class="headerlink" title="使用buildroot编译文件系统"></a>使用buildroot编译文件系统</h3><h3 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h3><h3 id="使用GDB单步调试内核"><a href="#使用GDB单步调试内核" class="headerlink" title="使用GDB单步调试内核"></a>使用GDB单步调试内核</h3>]]></content>
     
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+      <category>调试技术</category>
+      
+    </categories>
     
     
   </entry>
