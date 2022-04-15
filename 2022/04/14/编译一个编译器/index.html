@@ -23,10 +23,16 @@
 <meta property="og:site_name" content="CooperQian&#39;s blog">
 <meta property="og:description" content="基于crosstool-ng编译一个aarch64架构的编译器。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E7%BC%96%E8%AF%91%E5%99%A8%E9%85%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E7%BC%96%E8%AF%91%E5%99%A8%E7%89%88%E6%9C%AC.png">
+<meta property="og:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E5%86%85%E6%A0%B8%E5%A4%B4.png">
+<meta property="og:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9.png">
+<meta property="og:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E6%9E%B6%E6%9E%84.png">
 <meta property="article:published_time" content="2022-04-14T14:52:48.000Z">
-<meta property="article:modified_time" content="2022-04-14T15:41:23.836Z">
+<meta property="article:modified_time" content="2022-04-15T13:37:26.350Z">
 <meta property="article:author" content="CooperQian">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cooperqian.github.io/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E7%BC%96%E8%AF%91%E5%99%A8%E9%85%8D%E7%BD%AE.png">
   
   
   <title>编译一个编译器 - CooperQian&#39;s blog</title>
@@ -209,7 +215,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1.2k 字
         
       </span>
     
@@ -220,7 +226,7 @@
         
         
         
-          1 分钟
+          11 分钟
         
       </span>
     
@@ -270,7 +276,53 @@
             
             <div class="markdown-body">
               
-              
+              <p>基于crosstool-ng编译一个aarch64架构的编译器。</p>
+<h2 id="编译Cortex-a53-CPU的编译器"><a href="#编译Cortex-a53-CPU的编译器" class="headerlink" title="编译Cortex-a53 CPU的编译器"></a>编译Cortex-a53 CPU的编译器</h2><ol>
+<li><h3 id="下载crosstools-ng源码"><a href="#下载crosstools-ng源码" class="headerlink" title="下载crosstools-ng源码"></a>下载crosstools-ng源码</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> https://github.com/crosstool-ng/crosstool-ng.git --depth=1<br></code></pre></td></tr></table></figure>
+
+<p>直接下载仓库源码，<code>--depth=1</code> 下载深度为1，这样子容易下载好。</p>
+</li>
+<li><h3 id="安装相关依赖"><a href="#安装相关依赖" class="headerlink" title="安装相关依赖"></a>安装相关依赖</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo apt install autoconf automake binutils bison flex makeinfo texinfo zip unzip<br>sudo apt install help2man libtool-bin ncurses-devel libncurses5-dev<br></code></pre></td></tr></table></figure>
+</li>
+<li><h3 id="编译安装crosstool-ng"><a href="#编译安装crosstool-ng" class="headerlink" title="编译安装crosstool-ng"></a>编译安装crosstool-ng</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#进入在源码目录</span><br>./bootstrap <br>./configure <br> make -j16<br> sudo make install<br></code></pre></td></tr></table></figure>
+
+<p>完成后，执行如下命令进行测试。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">ct-ng -v<br>GNU Make 4.2.1<br>Built for x86_64-pc-linux-gnu<br>Copyright (C) 1988-2016 Free Software Foundation, Inc.<br>License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;<br>This is free software: you are free to change and redistribute it.<br>There is NO WARRANTY, to the extent permitted by law.<br></code></pre></td></tr></table></figure>
+</li>
+<li><h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>新建一个工作目录用来存放项目工程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">mkdir</span> ~/project<br></code></pre></td></tr></table></figure>
+
+<p>Crosstools-ng 提供了很多参考配置，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls samples <br>aarch64-ol7u9-linux-gnu<br>aarch64-rpi3-linux-gnu<br>aarch64-rpi4-linux-gnu<br>aarch64-unknown-linux-android<br>aarch64-unknown-linux-gnu<br>aarch64-unknown-linux-uclibc<br>alphaev56-unknown-linux-gnu<br>alphaev67-unknown-linux-gnu<br>.......<br></code></pre></td></tr></table></figure>
+
+<p>复制一个crosstool-ng中的sample配置文件，根据这个配置文件来修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/project<br><span class="hljs-built_in">cp</span> crosstool-ng/samples/aarch64-rpi3-linux-gnu/crosstool.config .config<br></code></pre></td></tr></table></figure>
+
+<p>开始自定义配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/project<br>ct-ng menuconfig<br></code></pre></td></tr></table></figure>
+
+<img src="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E7%BC%96%E8%AF%91%E5%99%A8%E9%85%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload class="" title="编译器配置">
+
+<p>GCC版本修改：</p>
+<img src="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E7%BC%96%E8%AF%91%E5%99%A8%E7%89%88%E6%9C%AC.png" srcset="/img/loading.gif" lazyload class="" title="编译器版本">
+
+<p>内核头修改：</p>
+<img src="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E5%86%85%E6%A0%B8%E5%A4%B4.png" srcset="/img/loading.gif" lazyload class="" title="内核头">
+
+<p>名称（vendor）修改：</p>
+<img src="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E5%90%8D%E7%A7%B0%E4%BF%AE%E6%94%B9.png" srcset="/img/loading.gif" lazyload class="" title="名称修改">
+
+<p>架构相关配置：</p>
+<p>这里我们选择ARM\64位\A53\小端</p>
+<img src="/2022/04/14/%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8/%E6%9E%B6%E6%9E%84.png" srcset="/img/loading.gif" lazyload class="" title="架构">
+
+<p>开始编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ct-ng build -j16<br></code></pre></td></tr></table></figure>
+
+<p>编译过程中会下载相关源码包，成果物会在路径：<code>~/x-tools</code> 下产生。</p>
+</li>
+</ol>
+
               
             </div>
             <hr/>
